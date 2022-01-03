@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 import sys
 from .conf import settings
 from .exceptions import NoRuleMatched
@@ -24,7 +22,7 @@ def read_actions():
             yield const.ACTION_SELECT
 
 
-class CommandSelector(object):
+class CommandSelector:
     """Helper for selecting rule from rules list."""
 
     def __init__(self, commands):

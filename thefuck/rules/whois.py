@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 from six.moves.urllib.parse import urlparse
 from thefuck.utils import for_app
 

@@ -48,7 +48,7 @@ def _get_output_lines(output):
 
 def get_output(script):
     """Gets command output from shell logger."""
-    with logs.debug_time(u'Read output from external shell logger'):
+    with logs.debug_time('Read output from external shell logger'):
         commands = _get_last_n(const.SHELL_LOGGER_LIMIT)
         for command in commands:
             if command['command'] == script:

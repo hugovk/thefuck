@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 from io import BytesIO
 import pytest
 from thefuck.types import Command

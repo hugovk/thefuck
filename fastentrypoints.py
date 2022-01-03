@@ -70,8 +70,7 @@ def get_args(cls, dist, header=None):
                           ep.module_name, ep.attrs[0], '.'.join(ep.attrs),
                           spec, group, name)
             args = cls._get_script_args(type_, name, header, script_text)
-            for res in args:
-                yield res
+            yield from args
 
 
 easy_install.ScriptWriter.get_args = get_args

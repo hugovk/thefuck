@@ -43,8 +43,6 @@ def get_new_command(command):
     if dest[0] == '':
         cwd = os.sep
         dest = dest[1:]
-    elif six.PY2:
-        cwd = os.getcwdu()
     else:
         cwd = os.getcwd()
     for directory in dest:
@@ -58,4 +56,4 @@ def get_new_command(command):
             cwd = os.path.join(cwd, best_matches[0])
         else:
             return cd_mkdir.get_new_command(command)
-    return u'cd "{0}"'.format(cwd)
+    return f'cd "{cwd}"'

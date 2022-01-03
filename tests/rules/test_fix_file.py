@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import pytest
 import os
 from collections import namedtuple
@@ -79,7 +77,7 @@ Traceback (most recent call last):
 TypeError: first argument must be string or compiled pattern
 """),
 
-    FixFileTest(u'python café.py', u'café.py', 8, None, u"""
+    FixFileTest('python café.py', 'café.py', 8, None, """
 Traceback (most recent call last):
   File "café.py", line 8, in <module>
     match("foo")
@@ -217,7 +215,7 @@ def test_get_new_command_with_settings(mocker, monkeypatch, test, settings):
 
     if test.col:
         assert (get_new_command(cmd) ==
-                u'dummy_editor {} +{}:{} && {}'.format(test.file, test.line, test.col, test.script))
+                f'dummy_editor {test.file} +{test.line}:{test.col} && {test.script}')
     else:
         assert (get_new_command(cmd) ==
-                u'dummy_editor {} +{} && {}'.format(test.file, test.line, test.script))
+                f'dummy_editor {test.file} +{test.line} && {test.script}')

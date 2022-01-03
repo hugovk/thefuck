@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import os
 from subprocess import PIPE, STDOUT
-from mock import Mock
+from unittest.mock import Mock
 import pytest
 from tests.utils import CorrectedCommand, Rule
 from thefuck import const
@@ -11,7 +9,7 @@ from thefuck.system import Path
 from thefuck.types import Command
 
 
-class TestCorrectedCommand(object):
+class TestCorrectedCommand:
 
     def test_equality(self):
         assert (CorrectedCommand('ls', None, 100) ==
@@ -26,8 +24,8 @@ class TestCorrectedCommand(object):
     def test_representable(self):
         assert '{}'.format(CorrectedCommand('ls', None, 100)) == \
                'CorrectedCommand(script=ls, side_effect=None, priority=100)'
-        assert u'{}'.format(CorrectedCommand(u'echo café', None, 100)) == \
-               u'CorrectedCommand(script=echo café, side_effect=None, priority=100)'
+        assert '{}'.format(CorrectedCommand('echo café', None, 100)) == \
+               'CorrectedCommand(script=echo café, side_effect=None, priority=100)'
 
     @pytest.mark.parametrize('script, printed, override_settings', [
         ('git branch', 'git branch', {'repeat': False, 'debug': False}),
@@ -44,7 +42,7 @@ class TestCorrectedCommand(object):
         assert out == printed
 
 
-class TestRule(object):
+class TestRule:
     def test_from_path_rule_exception(self, mocker):
         load_source = mocker.patch('thefuck.types.load_source',
                                    side_effect=ImportError("No module named foo..."))
@@ -113,7 +111,7 @@ class TestRule(object):
                 == [CorrectedCommand(script='test!', priority=100)])
 
 
-class TestCommand(object):
+class TestCommand:
     @pytest.fixture(autouse=True)
     def Popen(self, monkeypatch):
         Popen = Mock()

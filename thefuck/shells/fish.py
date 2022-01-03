@@ -78,7 +78,7 @@ class Fish(Generic):
         if binary in aliases and aliases[binary] != binary:
             return command_script.replace(binary, aliases[binary], 1)
         elif binary in aliases:
-            return u'fish -ic "{}"'.format(command_script.replace('"', r'\"'))
+            return 'fish -ic "{}"'.format(command_script.replace('"', r'\"'))
         else:
             return command_script
 
@@ -86,7 +86,7 @@ class Fish(Generic):
         return os.path.expanduser('~/.config/fish/fish_history')
 
     def _get_history_line(self, command_script):
-        return u'- cmd: {}\n   when: {}\n'.format(command_script, int(time()))
+        return f'- cmd: {command_script}\n   when: {int(time())}\n'
 
     def _script_from_history(self, line):
         if '- cmd: ' in line:
@@ -95,14 +95,14 @@ class Fish(Generic):
             return ''
 
     def and_(self, *commands):
-        return u'; and '.join(commands)
+        return '; and '.join(commands)
 
     def or_(self, *commands):
-        return u'; or '.join(commands)
+        return '; or '.join(commands)
 
     def how_to_configure(self):
         return self._create_shell_configuration(
-            content=u"thefuck --alias | source",
+            content="thefuck --alias | source",
             path='~/.config/fish/config.fish',
             reload='fish')
 
@@ -114,7 +114,7 @@ class Fish(Generic):
     def put_to_history(self, command):
         try:
             return self._put_to_history(command)
-        except IOError:
+        except OSError:
             logs.exception("Can't update history", sys.exc_info())
 
     def _put_to_history(self, command_script):
@@ -123,7 +123,4 @@ class Fish(Generic):
         if os.path.isfile(history_file_name):
             with open(history_file_name, 'a') as history:
                 entry = self._get_history_line(command_script)
-                if six.PY2:
-                    history.write(entry.encode('utf-8'))
-                else:
-                    history.write(entry)
+                history.write(entry)

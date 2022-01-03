@@ -44,7 +44,7 @@ class Bash(Generic):
                        app_alias=self.app_alias(alias_name))
         else:
             log_path = os.path.join(
-                gettempdir(), 'thefuck-script-log-{}'.format(uuid4().hex))
+                gettempdir(), f'thefuck-script-log-{uuid4().hex}')
             return '''
                 export THEFUCK_INSTANT_MODE=True;
                 export THEFUCK_OUTPUT_LOG={log};
@@ -70,7 +70,7 @@ class Bash(Generic):
                               os.path.expanduser('~/.bash_history'))
 
     def _get_history_line(self, command_script):
-        return u'{}\n'.format(command_script)
+        return f'{command_script}\n'
 
     def how_to_configure(self):
         if os.path.join(os.path.expanduser('~'), '.bashrc'):
@@ -81,9 +81,9 @@ class Bash(Generic):
             config = 'bash config'
 
         return self._create_shell_configuration(
-            content=u'eval "$(thefuck --alias)"',
+            content='eval "$(thefuck --alias)"',
             path=config,
-            reload=u'source {}'.format(config))
+            reload=f'source {config}')
 
     def _get_version(self):
         """Returns the version of the current shell"""

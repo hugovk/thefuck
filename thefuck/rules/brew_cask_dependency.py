@@ -5,8 +5,8 @@ from thefuck.specific.brew import brew_available
 
 @for_app('brew')
 def match(command):
-    return (u'install' in command.script_parts
-            and u'brew cask install' in command.output)
+    return ('install' in command.script_parts
+            and 'brew cask install' in command.output)
 
 
 @eager

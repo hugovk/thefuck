@@ -60,7 +60,7 @@ def match(command):
     return _search(command.output)
 
 
-@default_settings({'fixlinecmd': u'{editor} {file} +{line}',
+@default_settings({'fixlinecmd': '{editor} {file} +{line}',
                    'fixcolcmd': None})
 def get_new_command(command):
     m = _search(command.output)

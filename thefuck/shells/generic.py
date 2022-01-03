@@ -13,7 +13,7 @@ ShellConfiguration = namedtuple('ShellConfiguration', (
     'content', 'path', 'reload', 'can_configure_automatically'))
 
 
-class Generic(object):
+class Generic:
     friendly_name = 'Generic Shell'
 
     def get_aliases(self):
@@ -57,7 +57,7 @@ class Generic(object):
         """Returns list of history entries."""
         history_file_name = self._get_history_file_name()
         if os.path.isfile(history_file_name):
-            with io.open(history_file_name, 'r',
+            with open(history_file_name, 'r',
                          encoding='utf-8', errors='ignore') as history_file:
 
                 lines = history_file.readlines()
@@ -71,10 +71,10 @@ class Generic(object):
                         yield prepared
 
     def and_(self, *commands):
-        return u' && '.join(commands)
+        return ' && '.join(commands)
 
     def or_(self, *commands):
-        return u' || '.join(commands)
+        return ' || '.join(commands)
 
     def how_to_configure(self):
         return
@@ -103,10 +103,7 @@ class Generic(object):
     def quote(self, s):
         """Return a shell-escaped version of the string s."""
 
-        if six.PY2:
-            from pipes import quote
-        else:
-            from shlex import quote
+        from shlex import quote
 
         return quote(s)
 
@@ -142,9 +139,9 @@ class Generic(object):
         try:
             version = self._get_version()
         except Exception as e:
-            warn(u'Could not determine shell version: {}'.format(e))
+            warn(f'Could not determine shell version: {e}')
             version = ''
-        return u'{} {}'.format(self.friendly_name, version).rstrip()
+        return f'{self.friendly_name} {version}'.rstrip()
 
     def _create_shell_configuration(self, content, path, reload):
         return ShellConfiguration(

@@ -143,9 +143,9 @@ dnf_operations = ['autoremove', 'check', 'check-update', 'clean', 'deplist',
 
 
 def invalid_command(command):
-    return """No such command: %s. Please use /usr/bin/dnf --help
-It could be a DNF plugin command, try: "dnf install 'dnf-command(%s)'"
-""" % (command, command)
+    return """No such command: {}. Please use /usr/bin/dnf --help
+It could be a DNF plugin command, try: "dnf install 'dnf-command({})'"
+""".format(command, command)
 
 
 @pytest.mark.parametrize('output', [

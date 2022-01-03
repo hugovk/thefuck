@@ -28,7 +28,7 @@ def _get_shell_pid():
 
 def _get_not_configured_usage_tracker_path():
     """Returns path of special file where we store latest shell pid."""
-    return Path(gettempdir()).joinpath(u'thefuck.last_not_configured_run_{}'.format(
+    return Path(gettempdir()).joinpath('thefuck.last_not_configured_run_{}'.format(
         getpass.getuser(),
     ))
 
@@ -83,9 +83,9 @@ def _configure(configuration_details):
     """Adds alias to shell config."""
     path = Path(configuration_details.path).expanduser()
     with path.open('a') as shell_config:
-        shell_config.write(u'\n')
+        shell_config.write('\n')
         shell_config.write(configuration_details.content)
-        shell_config.write(u'\n')
+        shell_config.write('\n')
 
 
 def main():

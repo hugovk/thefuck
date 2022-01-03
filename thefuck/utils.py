@@ -14,12 +14,8 @@ from .system import Path
 
 DEVNULL = open(os.devnull, 'w')
 
-if six.PY2:
-    import anydbm
-    shelve_open_error = anydbm.error
-else:
-    import dbm
-    shelve_open_error = dbm.error
+import dbm
+shelve_open_error = dbm.error
 
 
 def memoize(fn):
@@ -135,13 +131,13 @@ def get_all_executables():
 
 def replace_argument(script, from_, to):
     """Replaces command line argument."""
-    replaced_in_the_end = re.sub(u' {}$'.format(re.escape(from_)), u' {}'.format(to),
+    replaced_in_the_end = re.sub(f' {re.escape(from_)}$', f' {to}',
                                  script, count=1)
     if replaced_in_the_end != script:
         return replaced_in_the_end
     else:
         return script.replace(
-            u' {} '.format(from_), u' {} '.format(to), 1)
+            f' {from_} ', f' {to} ', 1)
 
 
 @decorator
@@ -177,7 +173,7 @@ def is_app(command, *app_names, **kwargs):
 
     at_least = kwargs.pop('at_least', 0)
     if kwargs:
-        raise TypeError("got an unexpected keyword argument '{}'".format(kwargs.keys()))
+        raise TypeError(f"got an unexpected keyword argument '{kwargs.keys()}'")
 
     if len(command.script_parts) > at_least:
         return os.path.basename(command.script_parts[0]) in app_names
@@ -196,7 +192,7 @@ def for_app(*app_names, **kwargs):
     return decorator(_for_app)
 
 
-class Cache(object):
+class Cache:
     """Lazy read cache and save changes at exit."""
 
     def __init__(self):
@@ -339,9 +335,6 @@ def format_raw_script(raw_script):
     :rtype: basestring
 
     """
-    if six.PY2:
-        script = ' '.join(arg.decode('utf-8') for arg in raw_script)
-    else:
-        script = ' '.join(raw_script)
+    script = ' '.join(raw_script)
 
     return script.lstrip()

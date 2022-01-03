@@ -20,11 +20,11 @@ class Powershell(Generic):
                '}\n'
 
     def and_(self, *commands):
-        return u' -and '.join('({0})'.format(c) for c in commands)
+        return ' -and '.join(f'({c})' for c in commands)
 
     def how_to_configure(self):
         return ShellConfiguration(
-            content=u'iex "$(thefuck --alias)"',
+            content='iex "$(thefuck --alias)"',
             path='$profile',
             reload='. $profile',
             can_configure_automatically=False)
@@ -38,6 +38,6 @@ class Powershell(Generic):
                 stderr=DEVNULL)
             version = proc.stdout.read().decode('utf-8').rstrip().split('\n')
             return '.'.join(version[-1].split())
-        except IOError:
+        except OSError:
             proc = Popen(['pwsh', '--version'], stdout=PIPE, stderr=DEVNULL)
             return proc.stdout.read().decode('utf-8').split()[-1]

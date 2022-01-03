@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import pytest
 import warnings
-from mock import Mock, call, patch
+from unittest.mock import Mock, call, patch
 from thefuck.utils import default_settings, \
     memoize, get_closest, get_all_executables, replace_argument, \
     get_all_matched_commands, is_app, for_app, cache, \
@@ -38,7 +36,7 @@ def test_no_memoize():
     assert fn.call_count == 2
 
 
-class TestGetClosest(object):
+class TestGetClosest:
     def test_when_can_match(self):
         assert 'branch' == get_closest('brnch', ['branch', 'status'])
 
@@ -50,7 +48,7 @@ class TestGetClosest(object):
                            fallback_to_first=False) is None
 
 
-class TestGetCloseMatches(object):
+class TestGetCloseMatches:
     @patch('thefuck.utils.difflib_get_close_matches')
     def test_call_with_n(self, difflib_mock):
         get_close_matches('', [], 1)
@@ -170,12 +168,12 @@ def test_for_app(script, names, result):
     assert match(Command(script, '')) == result
 
 
-class TestCache(object):
+class TestCache:
     @pytest.fixture
     def shelve(self, mocker):
         value = {}
 
-        class _Shelve(object):
+        class _Shelve:
             def __init__(self, path):
                 pass
 
@@ -234,7 +232,7 @@ class TestCache(object):
         assert shelve == {key: {'etag': '0', 'value': 'test'}}
 
 
-class TestGetValidHistoryWithoutCurrent(object):
+class TestGetValidHistoryWithoutCurrent:
     @pytest.fixture(autouse=True)
     def fail_on_warning(self):
         warnings.simplefilter('error')
@@ -247,7 +245,7 @@ class TestGetValidHistoryWithoutCurrent(object):
         #  Passing as an argument causes `UnicodeDecodeError`
         #  with newer py.test and python 2.7
         mock.return_value = ['le cat', 'fuck', 'ls cat',
-                             'diff x', 'nocommand x', u'café ô']
+                             'diff x', 'nocommand x', 'café ô']
         return mock
 
     @pytest.fixture(autouse=True)
@@ -266,10 +264,10 @@ class TestGetValidHistoryWithoutCurrent(object):
         return mocker.patch('thefuck.utils.Path', return_value=path_mock)
 
     @pytest.mark.parametrize('script, result', [
-        ('le cat', ['ls cat', 'diff x', u'café ô']),
-        ('diff x', ['ls cat', u'café ô']),
-        ('fuck', ['ls cat', 'diff x', u'café ô']),
-        (u'cafe ô', ['ls cat', 'diff x', u'café ô']),
+        ('le cat', ['ls cat', 'diff x', 'café ô']),
+        ('diff x', ['ls cat', 'café ô']),
+        ('fuck', ['ls cat', 'diff x', 'café ô']),
+        ('cafe ô', ['ls cat', 'diff x', 'café ô']),
     ])
     def test_get_valid_history_without_current(self, script, result):
         command = Command(script, '')
