@@ -2,7 +2,6 @@ from imp import load_source
 import os
 import sys
 from warnings import warn
-from six import text_type
 from . import const
 from .system import Path
 
