@@ -7,11 +7,7 @@ containers = (('thefuck/python3-tcsh',
                    RUN apt-get update
                    RUN apt-get install -yy tcsh''',
                'tcsh'),
-              ('thefuck/python2-tcsh',
-               '''FROM python:2
-                   RUN apt-get update
-                   RUN apt-get install -yy tcsh''',
-               'tcsh'))
+              )
 
 
 @pytest.fixture(params=containers)

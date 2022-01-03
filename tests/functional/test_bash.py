@@ -8,11 +8,6 @@ python_3 = ('thefuck/python3-bash',
             'FROM python:3',
             'sh')
 
-python_2 = ('thefuck/python2-bash',
-            'FROM python:2',
-            'sh')
-
-
 init_bashrc = '''echo '
 export SHELL=/bin/bash
 export PS1="$ "
@@ -23,8 +18,7 @@ echo "instant mode ready: $THEFUCK_INSTANT_MODE"
 
 
 @pytest.fixture(params=[(python_3, False),
-                        (python_3, True),
-                        (python_2, False)])
+                        (python_3, True)])
 def proc(request, spawnu, TIMEOUT):
     container, instant_mode = request.param
     proc = spawnu(*container)

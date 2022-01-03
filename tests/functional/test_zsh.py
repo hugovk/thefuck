@@ -10,13 +10,6 @@ python_3 = ('thefuck/python3-zsh',
                 RUN apt-get install -yy zsh''',
             'sh')
 
-python_2 = ('thefuck/python2-zsh',
-            '''FROM python:2
-                RUN apt-get update
-                RUN apt-get install -yy zsh''',
-            'sh')
-
-
 init_zshrc = '''echo '
 export SHELL=/usr/bin/zsh
 export HISTFILE=~/.zsh_history
@@ -30,8 +23,7 @@ echo "instant mode ready: $THEFUCK_INSTANT_MODE"
 
 
 @pytest.fixture(params=[(python_3, False),
-                        (python_3, True),
-                        (python_2, False)])
+                        (python_3, True)])
 def proc(request, spawnu, TIMEOUT):
     container, instant_mode = request.param
     proc = spawnu(*container)
